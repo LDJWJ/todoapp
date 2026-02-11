@@ -26,6 +26,13 @@
 
         <div class="input-group">
             <input type="text" id="todo-input" placeholder="Add a new task..." autocomplete="off">
+            <select id="category-select" class="category-select">
+                <option value="work">💼 Work</option>
+                <option value="personal">👤 Personal</option>
+                <option value="shopping">🛒 Shopping</option>
+                <option value="health">❤️ Health</option>
+                <option value="other" selected>📌 Other</option>
+            </select>
             <button id="add-btn"><i class="fa-solid fa-plus"></i></button>
         </div>
 
@@ -33,6 +40,15 @@
             <button class="filter-btn active" data-filter="all">All</button>
             <button class="filter-btn" data-filter="active">Active</button>
             <button class="filter-btn" data-filter="completed">Completed</button>
+        </div>
+
+        <div class="category-filters">
+            <button class="category-filter-btn active" data-category="all">All Categories</button>
+            <button class="category-filter-btn" data-category="work">💼 Work</button>
+            <button class="category-filter-btn" data-category="personal">👤 Personal</button>
+            <button class="category-filter-btn" data-category="shopping">🛒 Shopping</button>
+            <button class="category-filter-btn" data-category="health">❤️ Health</button>
+            <button class="category-filter-btn" data-category="other">📌 Other</button>
         </div>
 
         <ul id="todo-list" class="todo-list">
