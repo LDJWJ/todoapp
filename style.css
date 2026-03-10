@@ -9,6 +9,13 @@
     --item-hover: rgba(255, 255, 255, 0.1);
     --danger-color: #ff7675;
     --success-color: #55efc4;
+
+    /* Category Colors */
+    --category-work: #3498db;
+    --category-personal: #9b59b6;
+    --category-shopping: #2ecc71;
+    --category-health: #e74c3c;
+    --category-other: #95a5a6;
 }
 
 /* Light Mode */
@@ -112,6 +119,42 @@ body.light-mode h1 {
     position: relative;
 }
 
+.category-select {
+    background: rgba(255, 255, 255, 0.1);
+    border: 1px solid var(--glass-border);
+    border-radius: 12px;
+    padding: 12px 16px;
+    color: var(--text-color);
+    font-size: 0.9rem;
+    outline: none;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    min-width: 140px;
+}
+
+.category-select option {
+    background: #2d3436;
+    color: white;
+}
+
+body.light-mode .category-select {
+    background: rgba(255, 255, 255, 0.9);
+}
+
+body.light-mode .category-select option {
+    background: white;
+    color: #2d3436;
+}
+
+.category-select:hover {
+    background: rgba(255, 255, 255, 0.15);
+    border-color: rgba(255, 255, 255, 0.5);
+}
+
+body.light-mode .category-select:hover {
+    background: rgba(255, 255, 255, 1);
+}
+
 .filter-tabs {
     display: flex;
     gap: 8px;
@@ -153,6 +196,53 @@ body.light-mode .filter-btn:hover {
 
 body.light-mode .filter-btn.active {
     color: white;
+}
+
+.category-filters {
+    display: flex;
+    gap: 6px;
+    margin-bottom: 1.5rem;
+    flex-wrap: wrap;
+}
+
+.category-filter-btn {
+    background: rgba(255, 255, 255, 0.05);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    color: rgba(255, 255, 255, 0.7);
+    padding: 6px 12px;
+    border-radius: 16px;
+    cursor: pointer;
+    font-size: 0.85rem;
+    font-weight: 500;
+    transition: all 0.3s ease;
+}
+
+.category-filter-btn:hover {
+    background: rgba(255, 255, 255, 0.1);
+    color: rgba(255, 255, 255, 0.9);
+}
+
+.category-filter-btn.active {
+    background: rgba(255, 255, 255, 0.2);
+    color: white;
+    border-color: rgba(255, 255, 255, 0.3);
+}
+
+body.light-mode .category-filter-btn {
+    background: rgba(45, 52, 54, 0.05);
+    border-color: rgba(45, 52, 54, 0.1);
+    color: rgba(45, 52, 54, 0.7);
+}
+
+body.light-mode .category-filter-btn:hover {
+    background: rgba(45, 52, 54, 0.1);
+    color: rgba(45, 52, 54, 0.9);
+}
+
+body.light-mode .category-filter-btn.active {
+    background: rgba(45, 52, 54, 0.15);
+    color: #2d3436;
+    border-color: rgba(45, 52, 54, 0.2);
 }
 
 input[type="text"] {
@@ -249,6 +339,35 @@ input[type="text"]:focus {
     gap: 12px;
     flex: 1;
     overflow: hidden;
+}
+
+.category-badge {
+    padding: 3px 8px;
+    border-radius: 12px;
+    font-size: 0.75rem;
+    font-weight: 600;
+    color: white;
+    flex-shrink: 0;
+}
+
+.category-badge.work {
+    background: var(--category-work);
+}
+
+.category-badge.personal {
+    background: var(--category-personal);
+}
+
+.category-badge.shopping {
+    background: var(--category-shopping);
+}
+
+.category-badge.health {
+    background: var(--category-health);
+}
+
+.category-badge.other {
+    background: var(--category-other);
 }
 
 .check-circle {

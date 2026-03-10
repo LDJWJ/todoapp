@@ -8,6 +8,17 @@ document.addEventListener('DOMContentLoaded', () => {
     const dateDisplay = document.getElementById('date-display');
     const themeToggle = document.getElementById('theme-toggle');
     const filterBtns = document.querySelectorAll('.filter-btn');
+    const categorySelect = document.getElementById('category-select');
+    const categoryFilterBtns = document.querySelectorAll('.category-filter-btn');
+
+    // Category definitions
+    const categories = {
+        work: { name: 'Work', emoji: '💼', color: '#3498db' },
+        personal: { name: 'Personal', emoji: '👤', color: '#9b59b6' },
+        shopping: { name: 'Shopping', emoji: '🛒', color: '#2ecc71' },
+        health: { name: 'Health', emoji: '❤️', color: '#e74c3c' },
+        other: { name: 'Other', emoji: '📌', color: '#95a5a6' }
+    };
 
     // Display Current Date
     const options = { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' };
@@ -16,6 +27,7 @@ document.addEventListener('DOMContentLoaded', () => {
     // Load todos and theme from localStorage
     let todos = JSON.parse(localStorage.getItem('todos')) || [];
     let currentFilter = 'all';
+    let currentCategory = 'all';
 
     // Initialize theme
     const savedTheme = localStorage.getItem('theme') || 'dark';
@@ -49,6 +61,15 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     });
 
+    categoryFilterBtns.forEach(btn => {
+        btn.addEventListener('click', () => {
+            currentCategory = btn.dataset.category;
+            categoryFilterBtns.forEach(b => b.classList.remove('active'));
+            btn.classList.add('active');
+            renderTodos();
+        });
+    });
+
     // Functions
     function toggleTheme() {
         document.body.classList.toggle('light-mode');
@@ -59,6 +80,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
     function addTodo() {
         const text = todoInput.value.trim();
+        const category = categorySelect.value;
 
         if (text === '') {
             // Shake animation for empty input
@@ -74,7 +96,8 @@ document.addEventListener('DOMContentLoaded', () => {
         const newTodo = {
             id: Date.now(),
             text: text,
-            completed: false
+            completed: false,
+            category: category
         };
 
         todos.push(newTodo);
@@ -82,6 +105,7 @@ document.addEventListener('DOMContentLoaded', () => {
         renderTodos();
 
         todoInput.value = '';
+        categorySelect.value = 'other';
         todoInput.focus();
     }
 
@@ -145,12 +169,19 @@ document.addEventListener('DOMContentLoaded', () => {
     function renderTodos() {
         todoList.innerHTML = '';
 
-        // Filter todos based on current filter
+        // Filter todos based on current filter and category
         let filteredTodos = todos;
+
+        // Apply status filter
         if (currentFilter === 'active') {
-            filteredTodos = todos.filter(todo => !todo.completed);
+            filteredTodos = filteredTodos.filter(todo => !todo.completed);
         } else if (currentFilter === 'completed') {
-            filteredTodos = todos.filter(todo => todo.completed);
+            filteredTodos = filteredTodos.filter(todo => todo.completed);
+        }
+
+        // Apply category filter
+        if (currentCategory !== 'all') {
+            filteredTodos = filteredTodos.filter(todo => todo.category === currentCategory);
         }
 
         filteredTodos.forEach(todo => {
@@ -158,11 +189,15 @@ document.addEventListener('DOMContentLoaded', () => {
             li.className = `todo-item ${todo.completed ? 'completed' : ''}`;
             li.setAttribute('data-id', todo.id);
 
+            const category = todo.category || 'other';
+            const categoryInfo = categories[category];
+
             li.innerHTML = `
                 <div class="todo-content" onclick="window.toggleTodoHandler(${todo.id})">
                     <div class="check-circle">
                         <i class="fa-solid fa-check"></i>
                     </div>
+                    <span class="category-badge ${category}">${categoryInfo.emoji} ${categoryInfo.name}</span>
                     <span class="todo-text" ondblclick="window.startEditHandler(event, ${todo.id})">${escapeHtml(todo.text)}</span>
                     <input type="text" class="todo-edit-input" value="${escapeHtml(todo.text)}" data-id="${todo.id}">
                 </div>
